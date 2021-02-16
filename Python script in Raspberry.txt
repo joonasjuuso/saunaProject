@@ -1,0 +1,79 @@
+import time
+import datetime
+import os
+import glob
+import pymysql
+import configparser
+
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
+
+base_dir = '/sys/bus/w1/devices/'
+device_folder = glob.glob(base_dir + '28*')[0]
+device_file = device_folder + '/w1_slave'
+
+def read_temp_raw():
+    f = open(device_file, 'r')
+    lines = f.readlines()
+    f.close()
+    return lines
+
+def read_temp():
+    lines = read_temp_raw()
+    while lines[0].strip()[-3:] != 'YES':
+        time.sleep(0.2)
+        lines = read_temp_raw()
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+        temp_string = lines[1][equals_pos+2:]
+        temp_c = float(temp_string) / 1000.0
+        return temp_c
+
+counter = int(2)
+aika = int(1)
+t = int(0)
+valmis = str("Ei oo vielä valmis!")
+id = int(1)
+
+config = configparser.RawConfigParser()
+config.read(filenames = 'my.properties',encoding='utf-8')
+print(config.sections())
+
+h = config.get('mysql','host')
+u = config.get('mysql','username')
+p = config.get('mysql','password')
+db = config.get('mysql','database')
+
+connect_db = pymysql.connect(host=h,user=u,password=p,database=db, port=25060)
+cursor = connect_db.cursor()
+
+cursor.execute("DROP TABLE IF EXISTS SAUNA")
+
+sql ='''CREATE TABLE SAUNA(
+   ID INT NOT NULL AUTO_INCREMENT,
+   PAIVAMAARA CHAR(20),
+   AIKA CHAR(20),
+   LAMPOTILA FLOAT,
+   ONKO CHAR(20),
+   PRIMARY KEY (ID)
+)'''
+
+cursor.execute(sql)
+
+while(t <= 4500):
+    x = datetime.datetime.now()
+    i=(read_temp())
+    if(i >= 75):
+        valmis = str("NONI! Saunaan!")
+    else:
+        valmis = str("Ei oo vielä valmis!")
+    cursor.execute("""INSERT INTO SAUNA (PAIVAMAARA, AIKA, LAMPOTILA, ONKO)
+    VALUES (%s,%s,%s,%s)""",(x.strftime("%x"),x.strftime("%X"),i,valmis))
+    connect_db.commit()
+    print(cursor.rowcount,"Record inserted successfully")
+    counter = counter + 1
+    time.sleep(60)
+    t = t + 60
+sqlExit = """INSERT INTO lastData(PAIVAMAARA, AIKA, LAMPOTILA, ONKO) SELECT PAIVAMAARA, AIKA, LAMPOTILA, ONKO FROM SAUNA"""
+cursor.execute(sqlExit)
+connect_db.close()
