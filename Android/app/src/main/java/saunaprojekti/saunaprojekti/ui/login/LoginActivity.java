@@ -23,15 +23,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import saunaprojekti.saunaprojekti.MainActivity;
 import saunaprojekti.saunaprojekti.R;
 import saunaprojekti.saunaprojekti.connectionActivity;
+import saunaprojekti.saunaprojekti.data.model.LoggedInUser;
 import saunaprojekti.saunaprojekti.ui.login.LoginViewModel;
 import saunaprojekti.saunaprojekti.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                Intent intent = new Intent(getApplicationContext(), connectionActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("name",usernameEditText.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
 

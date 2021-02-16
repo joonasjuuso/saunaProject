@@ -1,12 +1,16 @@
 package saunaprojekti.saunaprojekti;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class Sauna {
     private String PAIVAMAARA;
@@ -68,26 +73,30 @@ class Sauna {
 }
 
 
-public class connectionActivity extends Activity {
+public class connectionActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private TextView textView;
     private RequestQueue requestQueue;
-    ListView listView;
+    ListView mListView;
     Sauna objSauna;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_connection);
         super.onCreate(savedInstanceState);
 
+       //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         Log.d(TAG, "onCreate: Started.");
-        ListView mListView = (ListView) findViewById(R.id.list);
+        mListView = findViewById(R.id.list);
         ArrayList<Sauna> saunaList = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://kello9sauna.fi/js.php";
         PersonListAdapter adapter = new PersonListAdapter(this, R.layout.record, saunaList);
         mListView.setAdapter(adapter);
+        int counter = 0;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -116,7 +125,6 @@ public class connectionActivity extends Activity {
             }
         });
         queue.add(stringRequest);
-
     }
 }
 

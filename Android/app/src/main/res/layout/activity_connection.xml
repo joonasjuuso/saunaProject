@@ -4,17 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".connectionActivity"
-    tools:showIn="@layout/activity_connection">
+    tools:context=".connectionActivity">
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="16dp">
-    </ListView>
-    <ListView
-        android:id="@+id/list2"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginTop="16dp">
