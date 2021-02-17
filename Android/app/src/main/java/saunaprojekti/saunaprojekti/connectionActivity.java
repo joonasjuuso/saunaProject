@@ -1,8 +1,11 @@
 package saunaprojekti.saunaprojekti;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -80,7 +83,33 @@ public class connectionActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     ListView mListView;
     Sauna objSauna;
+    ArrayList<Sauna> saunaList = new ArrayList<>();
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
+        case R.id.menu:
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            return(true);
+        case R.id.reset:
+            //add the function to perform here
+            return(true);
+        case R.id.about:
+            //add the function to perform here
+            return(true);
+        case R.id.exit:
+            //add the function to perform here
+            return(true);
+    }
+        return(super.onOptionsItemSelected(item));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +120,6 @@ public class connectionActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         Log.d(TAG, "onCreate: Started.");
         mListView = findViewById(R.id.list);
-        ArrayList<Sauna> saunaList = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://kello9sauna.fi/js.php";
         PersonListAdapter adapter = new PersonListAdapter(this, R.layout.record, saunaList);
