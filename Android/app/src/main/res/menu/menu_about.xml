@@ -1,17 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".connectionActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/add" android:icon="@android:drawable/ic_menu_view" app:showAsAction="always"   android:title="@string/add"/>
+        android:id="@+id/mainmenu" android:icon="@android:drawable/ic_menu_revert" app:showAsAction="always" android:title="@string/mainmenu"/>
+
+    <item
+        android:id="@+id/table"  app:showAsAction="always"   android:title="@string/table"/>
     <item
         android:id="@+id/reset"  app:showAsAction="always|withText" android:title="@string/reset"/>
     <item
         android:id="@+id/about" android:icon="@android:drawable/ic_dialog_info" app:showAsAction="never" android:title="@string/about">
-    </item>
-    <item
-        android:id="@+id/menu" app:showAsAction="always" android:title="Menu">
-
     </item>
     <item
         android:id="@+id/logout" android:icon="@android:drawable/ic_dialog_info" app:showAsAction="never" android:title="@string/logout">

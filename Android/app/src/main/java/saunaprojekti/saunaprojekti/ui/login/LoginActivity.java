@@ -25,14 +25,12 @@ import android.widget.Toast;
 
 import saunaprojekti.saunaprojekti.MainActivity;
 import saunaprojekti.saunaprojekti.R;
-import saunaprojekti.saunaprojekti.connectionActivity;
-import saunaprojekti.saunaprojekti.data.model.LoggedInUser;
-import saunaprojekti.saunaprojekti.ui.login.LoginViewModel;
-import saunaprojekti.saunaprojekti.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private String name;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +74,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("name",usernameEditText.getText().toString());
-                startActivity(intent);
+                Intent loginIntent = new Intent(getApplicationContext(), MainActivity.class);
+                loginIntent.putExtra("name",name);
+                startActivity(loginIntent);
                 finish();
             }
         });
@@ -99,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                name = usernameEditText.getText().toString();
             }
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
@@ -110,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
+
                 }
                 return false;
             }
@@ -121,17 +120,21 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
             }
         });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.welcome) + name + "!";
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+    public String getName() {
+        return name;
     }
 }

@@ -2,4 +2,5 @@
 <com.github.mikephil.charting.charts.LineChart android:id="@+id/chart1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -28,6 +28,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import saunaprojekti.saunaprojekti.ui.login.LoginActivity;
+
+
 class Sauna {
     private String PAIVAMAARA;
     private String AIKA;
@@ -84,47 +87,64 @@ public class connectionActivity extends AppCompatActivity {
     ListView mListView;
     Sauna objSauna;
     ArrayList<Sauna> saunaList = new ArrayList<>();
+    String name;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu3) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu3);
         return true;
     }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu3) {
+        MenuItem item = menu3.findItem(R.id.logout);
+        if (item.getTitle().equals("Logout")) {
+            item.setTitle("Log out from " + name);
+        }
+        return super.onPrepareOptionsMenu(menu3);
+    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item3) { switch(item3.getItemId()) {
         case R.id.menu:
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(connectionActivity.this, MainActivity.class);
+            intent.putExtra("name",name);
             startActivity(intent);
-            return(true);
+            finish();
+            break;
+        case R.id.add:
+            getData();
+            break;
         case R.id.reset:
-            //add the function to perform here
-            return(true);
+            Intent graphIntent = new Intent(connectionActivity.this,kuvaajaActivity.class);
+            graphIntent.putExtra("name",name);
+            startActivity(graphIntent);
+            finish();
+            break;
         case R.id.about:
-            //add the function to perform here
-            return(true);
+            Intent aboutIntent = new Intent(connectionActivity.this,aboutActivity.class);
+            aboutIntent.putExtra("name",name);
+            startActivity(aboutIntent);
+            finish();
+            break;
+        case R.id.logout:
+            Intent logoutIntent = new Intent(connectionActivity.this, LoginActivity.class);
+            startActivity(logoutIntent);
+            finish();
+            break;
         case R.id.exit:
-            //add the function to perform here
-            return(true);
+            finish();
+            break;
     }
-        return(super.onOptionsItemSelected(item));
+        return(super.onOptionsItemSelected(item3));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_connection);
-        super.onCreate(savedInstanceState);
-
-       //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        Log.d(TAG, "onCreate: Started.");
+    protected void getData() {
         mListView = findViewById(R.id.list);
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://kello9sauna.fi/js.php";
         PersonListAdapter adapter = new PersonListAdapter(this, R.layout.record, saunaList);
         mListView.setAdapter(adapter);
-        int counter = 0;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -153,6 +173,17 @@ public class connectionActivity extends AppCompatActivity {
             }
         });
         queue.add(stringRequest);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_connection);
+        super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        name = extras.getString("name");
+        Log.d(TAG, "onCreate: Started.");
+        getData();
+        invalidateOptionsMenu();
     }
 }
 

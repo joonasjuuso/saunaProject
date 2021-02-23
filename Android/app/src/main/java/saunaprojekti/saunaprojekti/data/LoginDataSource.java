@@ -1,6 +1,7 @@
 package saunaprojekti.saunaprojekti.data;
 
 import saunaprojekti.saunaprojekti.data.model.LoggedInUser;
+import saunaprojekti.saunaprojekti.ui.login.LoginActivity;
 
 import java.io.IOException;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
+    LoginActivity mActivity;
     public Result<LoggedInUser> login(String username, String password) {
 
         try {
