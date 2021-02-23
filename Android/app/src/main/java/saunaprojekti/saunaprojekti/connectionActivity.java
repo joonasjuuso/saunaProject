@@ -134,7 +134,6 @@ public class connectionActivity extends AppCompatActivity {
             break;
         case R.id.exit:
             finish();
-            break;
     }
         return(super.onOptionsItemSelected(item3));
     }

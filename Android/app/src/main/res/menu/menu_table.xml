@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
-        android:id="@+id/table"  app:showAsAction="always|withText"   android:title="@string/table"/>
+        android:id="@+id/table" android:icon="@drawable/ic_action_table" app:showAsAction="always"   android:title="@string/table"/>
     <item
-        android:id="@+id/reset"  app:showAsAction="always|withText" android:title="@string/reset"/>
+        android:id="@+id/reset" android:icon="@drawable/ic_action_graph" app:showAsAction="always|withText" android:title="@string/reset"/>
     <item
         android:id="@+id/about" android:icon="@android:drawable/ic_dialog_info" app:showAsAction="never" android:title="@string/about">
     </item>

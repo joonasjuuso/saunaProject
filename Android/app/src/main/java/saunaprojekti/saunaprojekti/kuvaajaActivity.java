@@ -92,7 +92,7 @@ public class kuvaajaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item2) { switch(item2.getItemId()) {
         case R.id.add:
-
+            updateChart();
             break;
         case R.id.reset:
             Intent intent = new Intent(getApplicationContext(), connectionActivity.class);
@@ -120,7 +120,7 @@ public class kuvaajaActivity extends AppCompatActivity {
         case R.id.exit:
             //add the function to perform here
             finish();
-            break;
+
     }
         return(super.onOptionsItemSelected(item2));
     }
@@ -166,4 +166,39 @@ public class kuvaajaActivity extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
-}
+
+    private void updateChart() {
+        Log.d(TAG, "UpdateChart");
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://kello9sauna.fi/js.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.optJSONObject(i);
+                                String AIKA = object.optString("AIKA");
+                                String lampoConv = object.optString("LAMPOTILA");
+                                Log.d("replace",AIKA);
+                                float aikaPitka = Float.parseFloat(AIKA);
+                                float lampoPitka = Float.parseFloat(lampoConv);
+                                x.add(new Entry(aikaPitka,lampoPitka));
+                                Log.d("data", String.valueOf(aikaPitka));
+                            }
+                            mChart.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        queue.add(stringRequest);
+
+    }
+    }

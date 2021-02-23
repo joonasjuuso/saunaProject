@@ -27,14 +27,20 @@ public class aboutActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), connectionActivity.class);
             intent.putExtra("name",name);
             startActivity(intent);
+            finish();
             break;
         case R.id.mainmenu:
             Intent mainmenuIntent = new Intent(getApplicationContext(),MainActivity.class);
             mainmenuIntent.putExtra("name",name);
             startActivity(mainmenuIntent);
+            finish();
             break;
         case R.id.reset:
-            return(true);
+            Intent tableIntent = new Intent(getApplicationContext(),connectionActivity.class);
+            tableIntent.putExtra("name",name);
+            startActivity(tableIntent);
+            finish();
+            break;
         case R.id.about:
             return(true);
         case R.id.logout:
@@ -45,7 +51,7 @@ public class aboutActivity extends AppCompatActivity {
         case R.id.exit:
             //add the function to perform here
             finish();
-            break;
+
     }
         return(super.onOptionsItemSelected(item4));
     }

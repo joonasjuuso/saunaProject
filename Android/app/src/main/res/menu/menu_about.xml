@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/mainmenu" android:icon="@android:drawable/ic_menu_revert" app:showAsAction="always" android:title="@string/mainmenu"/>
+        android:id="@+id/mainmenu" android:icon="@drawable/ic_action_revert" app:showAsAction="always" android:title="@string/mainmenu"/>
 
     <item
-        android:id="@+id/table"  app:showAsAction="always"   android:title="@string/table"/>
+        android:id="@+id/table"  android:icon="@drawable/ic_action_table" app:showAsAction="always"   android:title="@string/table"/>
     <item
-        android:id="@+id/reset"  app:showAsAction="always|withText" android:title="@string/reset"/>
+        android:id="@+id/reset"  android:icon="@drawable/ic_action_graph" app:showAsAction="always" android:title="@string/reset"/>
     <item
         android:id="@+id/about" android:icon="@android:drawable/ic_dialog_info" app:showAsAction="never" android:title="@string/about">
     </item>

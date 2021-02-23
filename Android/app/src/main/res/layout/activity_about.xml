@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:padding="20dp"
-        android:text="Tämä sovellus on koulussa tehty projekti, jonka tarkoitus on näyttää Joonaksen saunan lämpötila.\n\nUusia lämpötila-arvoja voi nähdä myös nettisivuillamme https:\\kello9sauna.fi.\n\nLämpötilan mittausajoista kerrotaan nettisivuillamme kun saunan lämmittäminen on suunnitelmissa."
+        android:text="@string/aboutString"
         android:textAlignment="center"
         android:textColor="@color/textBackground"
         android:textSize="20dp"
