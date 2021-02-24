@@ -1,13 +1,12 @@
 package saunaprojekti.saunaprojekti;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,25 +15,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import saunaprojekti.saunaprojekti.ui.login.LoginActivity;
 
@@ -55,7 +49,7 @@ public class kuvaajaActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         name = extras.getString("name");
         x = new ArrayList<Entry>();
-        mChart = (LineChart) findViewById(R.id.chart1);
+        mChart = findViewById(R.id.chart1);
         mChart.setDrawGridBackground(false);
         mChart.setTouchEnabled(true);
         mChart.setDragEnabled(true);
@@ -64,7 +58,7 @@ public class kuvaajaActivity extends AppCompatActivity {
         XAxis xl = mChart.getXAxis();
         xl.setAvoidFirstLastClipping(true);
         YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setInverted(true);
+        leftAxis.setInverted(false);
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
         Legend l = mChart.getLegend();

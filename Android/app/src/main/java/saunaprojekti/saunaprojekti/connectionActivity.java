@@ -113,7 +113,7 @@ public class connectionActivity extends AppCompatActivity {
             finish();
             break;
         case R.id.add:
-            getData();
+            updateData();
             break;
         case R.id.reset:
             Intent graphIntent = new Intent(connectionActivity.this,kuvaajaActivity.class);
@@ -145,6 +145,42 @@ public class connectionActivity extends AppCompatActivity {
         PersonListAdapter adapter = new PersonListAdapter(this, R.layout.record, saunaList);
         mListView.setAdapter(adapter);
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.optJSONObject(i);
+                                String line = object.optString("PAIVAMAARA");
+                                String AIKA = object.optString("AIKA");
+                                String lampoConv = object.optString("LAMPOTILA");
+                                String ONKO = object.optString("ONKO");
+                                Sauna yes = new Sauna(line, AIKA, lampoConv, ONKO);
+                                saunaList.add(yes);
+                            }
+                            // Once we added the string to the array, we notify the arrayAdapter
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    protected void updateData() {
+        mListView = findViewById(R.id.list);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://kello9sauna.fi/js.php";
+        PersonListAdapter adapter = new PersonListAdapter(this, R.layout.record, saunaList);
+        mListView.setAdapter(adapter);
+        saunaList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

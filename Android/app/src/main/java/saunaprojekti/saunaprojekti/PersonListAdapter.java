@@ -22,7 +22,7 @@ public class PersonListAdapter extends ArrayAdapter<Sauna> {
 
     private final Context mContext;
     private final int mResource;
-    private int lastPosition = -1;
+    private final int lastPosition = -1;
 
     /**
      * Holds variables in a View
@@ -71,10 +71,10 @@ public class PersonListAdapter extends ArrayAdapter<Sauna> {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.record, null);
             holder= new ViewHolder();
-            holder.paivamaara = (TextView) convertView.findViewById(R.id.record_paivamaara);
-            holder.aika = (TextView) convertView.findViewById(R.id.record_aika);
-            holder.lampotila = (TextView) convertView.findViewById(R.id.record_lampotila);
-            holder.onko = (TextView) convertView.findViewById(R.id.record_onko);
+            holder.paivamaara = convertView.findViewById(R.id.record_paivamaara);
+            holder.aika = convertView.findViewById(R.id.record_aika);
+            holder.lampotila = convertView.findViewById(R.id.record_lampotila);
+            holder.onko = convertView.findViewById(R.id.record_onko);
             convertView.setTag(holder);
         }
         else{
